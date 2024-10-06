@@ -2,7 +2,7 @@ import { HttpStatus } from "@common/constants/httpStatusCode";
 import type { ServiceError } from "@common/error/serviceError";
 import { ENVIRONMENT_VARS } from "@common/utils/envConfig";
 import { validateRequest } from "@common/utils/httpHandlers";
-import { type Request, type Response, Router } from "express";
+import { type NextFunction, type Request, type Response, Router } from "express";
 import { stockSymbolPathParamSchema } from "./docs/stockSymbolSchemas";
 import type { StockSymbolService } from "./service/stockSymbolService";
 
@@ -48,7 +48,8 @@ const getStockSymbolPriceCheckJobRouteHandler = async (
     res.status(HttpStatus.SUCCESS).send(`Price check job for stock symbol: "${parsedSymbol}" has been scheduled.`);
 };
 
-const errorHandlerMiddleware = (error: Error, _req: Request, res: Response): void => {
+// next must be kept here, otherwise Express won't recognize, that it is an error handler middleware.
+const errorHandlerMiddleware = (error: Error, _req: Request, res: Response, _next: NextFunction): void => {
     const serviceError = <ServiceError>error;
 
     res.status(serviceError.code).send(serviceError.message);
