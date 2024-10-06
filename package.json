@@ -1,0 +1,57 @@
+{
+    "name": "stock-price-checker",
+    "version": "0.0.1",
+    "description": "Stock price checking application",
+    "main": "index.ts",
+    "private": true,
+    "scripts": {
+        "dev": "cross-env NODE_ENV='development' tsx watch --clear-screen=false src/index.ts | pino-pretty",
+        "build:prd": "cross-env NODE_ENV='production' tsup",
+        "build:prd:checked": "cross-env NODE_ENV='production' tsup --dts",
+        "start:prd": "cross-env NODE_ENV='production' node dist/index.mjs",
+        "clean": "rimraf dist coverage",
+        "lint": "biome check src/",
+        "lint:fix": "biome check src/ --fix",
+        "format": "biome format src/",
+        "test": "vitest run",
+        "prepare": "husky || true"
+    },
+    "dependencies": {
+        "@asteasolutions/zod-to-openapi": "7.2.0",
+        "cors": "2.8.5",
+        "cron": "3.1.7",
+        "cross-env": "7.0.3",
+        "dotenv": "16.4.5",
+        "envalid": "8.0.0",
+        "express": "5.0.0",
+        "express-rate-limit": "7.4.1",
+        "finnhub": "1.2.18",
+        "helmet": "8.0.0",
+        "pino": "9.4.0",
+        "pino-http": "10.3.0",
+        "swagger-ui-express": "5.0.1",
+        "zod": "3.23.8"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "1.9.3",
+        "@commitlint/cli": "19.5.0",
+        "@commitlint/config-conventional": "19.5.0",
+        "@types/cors": "2.8.17",
+        "@types/express": "5.0.0",
+        "@types/supertest": "6.0.2",
+        "@types/swagger-ui-express": "4.1.6",
+        "husky": "9.1.6",
+        "lint-staged": "15.2.10",
+        "pino-pretty": "11.2.2",
+        "rimraf": "6.0.1",
+        "supertest": "7.0.0",
+        "tsup": "8.3.0",
+        "tsx": "4.19.1",
+        "typescript": "5.6.2",
+        "vite-tsconfig-paths": "5.0.1",
+        "vitest": "2.1.2"
+    },
+    "lint-staged": {
+        "*.{js,ts,cjs,mjs,d.cts,d.mts,json,jsonc}": ["biome check --apply --no-errors-on-unmatched"]
+    }
+}
